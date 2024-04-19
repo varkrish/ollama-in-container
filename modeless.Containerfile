@@ -4,6 +4,7 @@ FROM registry.access.redhat.com/ubi8/ubi-minimal
 MAINTAINER Varun Krishnamurthy <varkrish@redhat.com>
 
 WORKDIR /app/ollama
+ENV HOME /app/ollama
 # Install necessary packages
 RUN microdnf  --noplugins install -y findutils curl jq && \
     microdnf --noplugins clean all && \
