@@ -13,5 +13,7 @@ spec:
     kind: Service
     name: gui-{{ .Chart.Name }}
     weight: 100
+  tls:
+    termination: edge
   wildcardPolicy: None
 {{- end }}
