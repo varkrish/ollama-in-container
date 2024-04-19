@@ -1,0 +1,17 @@
+{{- if .Values.gui.enable }}
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app: gui-{{ .Chart.Name }}
+  name: gui-{{ .Chart.Name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  port:
+    targetPort: 8080
+  to:
+    kind: Service
+    name: gui-{{ .Chart.Name }}
+    weight: 100
+  wildcardPolicy: None
+{{- end }}

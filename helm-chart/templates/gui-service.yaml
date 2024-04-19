@@ -1,0 +1,15 @@
+{{- if .Values.gui.enable }}
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: gui-{{ .Chart.Name }}
+  name: gui-{{ .Chart.Name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    deployment: gui-{{ .Chart.Name }}
+{{- end }}
