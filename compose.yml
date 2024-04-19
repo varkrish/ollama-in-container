@@ -8,7 +8,7 @@ services:
       dockerfile: Containerfile
       args:
         - PULL_MODEL_BY_DEFAULT= true
-        - MODEL=llama2 #Model should be a valid model
+        - MODEL=llama3 #Model should be a valid model
     environment:
       - MODEL=llama2 # Set this if we want to download the models during runtime. Change to mistral or any other model. 
     ports:

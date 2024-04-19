@@ -18,7 +18,7 @@ RUN mkdir -p /var/lib/ollama/.ollama/.ollama && \
 
 # Conditionally pull model if PULL_MODEL_BY_DEFAULT is set to true
 ARG PULL_MODEL_BY_DEFAULT=false
-ARG MODEL=llama2
+ARG MODEL=llama3
 #if the model is already available locally, we just copy to the container to avoid re-downlaoding
 COPY ./models .ollama/
 RUN if [ "$PULL_MODEL_BY_DEFAULT" = "true" ]; then ollama serve & sleep 50 && ollama pull $MODEL; fi
