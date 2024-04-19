@@ -10,12 +10,14 @@ RUN microdnf  --noplugins install -y findutils curl jq && \
     curl -fsSL https://ollama.com/install.sh | sh && \
     chmod +x /usr/local/bin/ollama
 ADD ollama-entrypoint.sh /app/ollama
-#RUN ollama pull llama2
-RUN mkdir -p /var/lib/ollama/.ollama/.ollama && \
-    chgrp -R 0 /var/lib/ollama/.ollama && chmod -R g=u /var/lib/ollama/.ollama  && \
-    chmod +x /app/ollama/ollama-entrypoint.sh && \
-    chgrp -R 0 /app/ollama && chmod -R g=u /app/ollama 
 
+ADD ollama-entrypoint.sh .
+
+RUN mkdir -p .ollama && \
+    chgrp -R 0 .ollama && chmod -R g=u .ollama  && \
+    chmod +x /app/ollama/ollama-entrypoint.sh && \
+    chgrp -R 0 /app/ollama && chmod -R g=u /app/ollama/
+    
 # Conditionally pull model if PULL_MODEL_BY_DEFAULT is set to true
 ARG PULL_MODEL_BY_DEFAULT=false
 ARG MODEL=llama3
