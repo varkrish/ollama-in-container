@@ -10,7 +10,7 @@ services:
         - PULL_MODEL_BY_DEFAULT= true
         - MODEL=llama3 #Model should be a valid model
     environment:
-      - MODEL=llama2 # Set this if we want to download the models during runtime. Change to mistral or any other model. 
+      - MODEL=llama3 # Set this if we want to download the models during runtime. Change to mistral or any other model. 
     ports:
       - 11434:11434
     volumes:
@@ -28,3 +28,17 @@ services:
     #volumes:
     #Mount any host volume as required.
     # - ./data:/data
+  openwebgui:
+    image: quay.io/varkrish/openwebgui:latest
+    # build: 
+    #   context : ./ollama/
+    #   dockerfile: Containerfile
+    #   args:
+    #     - PULL_MODEL_BY_DEFAULT= true
+    #     - MODEL=llama3 #Model should be a valid model
+    environment:
+      -  OLLAMA_API_BASE_URL=http://ollama:11434/api
+    ports:
+      - 8080:8080
+
+
