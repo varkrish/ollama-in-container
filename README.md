@@ -1,30 +1,39 @@
-# Ollama Server Docker Image
+# Introduction
 
-This Dockerfile is for building an Ollama Server container image. The container includes the Ollama application, which is a part of the Ollama system for managing and serving machine learning models. The Ollama Server provides an API for accessing machine learning models hosted on the server.
+[ollama](https://ollama.com/) is a model server aiding devs to run opensource models.
 
-## Usage
+[Open WebUI](https://docs.openwebui.com/) is an extensible, feature-rich, and user-friendly self-hosted WebUI designed to operate entirely offline. It supports various LLM runners, including Ollama and OpenAI-compatible APIs.
 
-### Building the Docker Image
+[Shell Pilot](https://github.com/reid41/shell-pilot) is a version of the chatGPT-shell-cli library , modified to support Ollama and work with local LLM, and improve some features.
 
-To build the Docker image, use the following command:
+This repo contains assets that containerizes ollama, OpenWebUI and help us to run the whole stack either locally using Podman Compose or deploy them on OpenShift. 
 
-```bash
-podman build -t ollama-server .
-```
-## Environment Variables
+For Other Kuberenetes flavors, devs can replace `route.yaml` with appropriate `ingress.yaml`
 
-    PULL_MODEL_BY_DEFAULT (default: false): Controls whether to automatically pull the llama2 model at startup.
-    > MODEL (default: llama2): Specifies the name of the Ollama model to pull (if PULL_MODEL_BY_DEFAULT is true).
+### Local Quick Start
 
-## Ports
+Running the stack locally:
 
-The container exposes port 11434 (configurable) for Ollama communication.
+1. `git clone` this repo 
+2. cd into the project directory.
+3. Run `podman compose up`
+4. Navigate to `https://localhost:8080` to access the GUI
 
-## User
 
-The container runs as user ID 1001 (non-root) for security reasons.
+### Deploying on OCP
 
-## Entrypoint
 
-The container's entrypoint script is /app/ollama/ollama-entrypoint.sh. This script tries to download the given model during startup of the th e MODEL is not available. 
+1. Review the values.yaml and update the required config  
+2. Login into OpenShift using `oc login` if not logged in already
+3. Create a new PVC called `model-store` with minimum size of 10 Gi
+3. Run `helm upgrade --install my-chatgpt helm-charts/. -n <namespace>`
+4. Once all the pods are up, navigate to the url as shown the `oc route`
 
+### Configuration
+
+update the below env variables defined in `compose.yml` or `values.yaml` as required:
+
+| ENV Variable          | Description                                                                                                      | Default Value |
+|-----------------------|------------------------------------------------------------------------------------------------------------------|---------------|
+| PULL_MODEL_BY_DEFAULT | Determines if the model should be pulled automatically.                                                         | false         |
+| MODEL                 | Name of the model to be pulled if auto-pulling is enabled.                                                        | llama3        |
