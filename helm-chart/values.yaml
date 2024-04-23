@@ -79,7 +79,7 @@ volumeMounts:
       mountPath: /app/ollama/.ollama/ #to cache models
       readOnly: false
 gui:
-  image: quay.io/varkrish/ollama:latest
+  image: quay.io/varkrish/openwebgui:latest
   enable: true
   env:
    - name : OLLAMA_API_BASE_URL
